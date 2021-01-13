@@ -7,7 +7,7 @@ func main() {
 	num := []int{5, 2, 4, 6, 6, 3}
 	queries := [][]int{{12, 4}, {8, 1}, {6, 3}}
 	arr := handler(num, queries)
-	fmt.Printf("获取的集合：%v", arr)
+	fmt.Printf("获取的集合：%v\n", arr)
 }
 
 func handler(arr1 []int, arr2 [][]int) []int {
@@ -19,6 +19,7 @@ func handler(arr1 []int, arr2 [][]int) []int {
 	intSetMap := make(map[int][]int, len(arr2))
 	for _, val := range arr2 {
 		intSetMap[val[1]] = getAggregate(val[1], arr1)
+		fmt.Printf("%d的intSetMap为：%v\n", val[1], intSetMap[val[1]])
 	}
 	maxArr := []int{}
 	for i := 0; i < len(arr2); i++ {
@@ -26,14 +27,16 @@ func handler(arr1 []int, arr2 [][]int) []int {
 		intMap := intSetMap[arr2[i][1]]
 		for _, val := range intMap {
 			intMax := arr2[i][0] & val
+			fmt.Printf("第%d轮的数：%d与intMap为：%d的与操作结果为：%d\n", i, arr2[i][0], val, intMax)
 			if intMax > max {
 				max = intMax
 			}
 		}
+		fmt.Printf("第%d轮的max为：%d\n", i, max)
 		maxArr = append(maxArr, max)
 
 	}
-	return arr
+	return maxArr
 }
 
 func getAggregate(num int, arr []int) []int {
@@ -42,7 +45,7 @@ func getAggregate(num int, arr []int) []int {
 		return set
 	}
 	for i := 0; i < len(arr); i++ {
-		if arr[i] < num {
+		if arr[i] <= num {
 			set = append(set, arr[i])
 		}
 	}
