@@ -25,9 +25,13 @@ func handler(arr1 []int, arr2 [][]int) []int {
 	maxArr := []int{}
 	for i := 0; i < len(arr2); i++ {
 		max := 0
-		intMap := intSetMap[arr2[i][1]]
+		value := arr2[i][1]
+		intMap := intSetMap[value]
+		if len(intMap) <= 0 {
+			//intMap = make(map[int][]int, )
+		}
 		for _, val := range intMap {
-			intMax := arr2[i][0] & val
+			intMax := arr2[i][0] ^ val
 			fmt.Printf("第%d轮的数：%d与intMap为：%d的与操作结果为：%d\n", i, arr2[i][0], val, intMax)
 			if intMax > max {
 				max = intMax
